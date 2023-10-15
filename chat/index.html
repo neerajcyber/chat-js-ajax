@@ -1,0 +1,175 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Lines</title>
+</head>
+<body>
+    <label for="startX">Start X:</label>
+    <input type="number" id="startX"><br>
+
+    <label for="startY">Start Y:</label>
+    <input type="number" id="startY"><br>
+
+    <label for="endX">End X:</label>
+    <input type="number" id="endX"><br>
+
+    <label for="endY">End Y:</label>
+    <input type="number" id="endY"><br>
+
+    <button onclick="drawLine()">Draw Line</button>
+
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+    <script src="../js/move.js"></script>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Lines</title>
+</head>
+<body>
+    <label for="vLine1StartX">Vertical Line 1 Start X:</label>
+    <input type="number" id="vLine1StartX"><br>
+
+    <label for="vLine1StartY">Vertical Line 1 Start Y:</label>
+    <input type="number" id="vLine1StartY"><br>
+
+    <label for="hLine1StartX">Horizental Line 1 Start X:</label>
+    <input type="number" id="hLine1StartX"><br>
+
+    <label for="hLine1StartY">Horizental Line 1 Start Y:</label>
+    <input type="number" id="hLine1StartY"><br>
+
+    <label for="vLine2StartX">Vertical Line 2 Start X:</label>
+    <input type="number" id="vLine2StartX"><br>
+
+    <label for="vLine2StartY">Vertical Line 2 Start Y:</label>
+    <input type="number" id="vLine2StartY"><br>
+
+    <label for="hLine2StartX">Horizental Line 2 Start X:</label>
+    <input type="number" id="hLine2StartX"><br>
+
+    <label for="hLine2StartY">Horizental Line 2 Start Y:</label>
+    <input type="number" id="hLine2StartY"><br>
+
+  Similar inputs for other line coordinates 
+
+    <button onclick="drawLines()">Draw Lines</button>
+
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+    <script src="../js/move.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #animation-container {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            background-color: black;
+        }
+
+        #square {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="animation-container">
+        <div id="square"></div>
+    </div>
+    <canvas id="canvas" width="1500" height="1500"></canvas>
+
+    <script>
+        const square = document.getElementById('square');
+        const container = document.getElementById('animation-container');
+        
+        const startA = { x: 50, y: 50 };
+        const endC = { x: 300, y: 50 };
+        const startB = { x: 50, y: 300 };
+        const endD = { x: 300, y: 300 };
+        
+        let currentPosition = { ...startA };
+        let targetPosition = { ...endC };
+        const speed = 2;  // Adjust the speed of the animation
+        
+        function updateSquarePosition() {
+            const dx = targetPosition.x - currentPosition.x;
+            const dy = targetPosition.y - currentPosition.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > speed) {
+                const directionX = dx / distance;
+                const directionY = dy / distance;
+                currentPosition.x += directionX * speed;
+                currentPosition.y += directionY * speed;
+            }
+            //  else 
+                // Switch to the other set of points
+                // if (targetPosition === endC) {
+                //     targetPosition = endD;
+                // } else {
+                //     targetPosition = endC;
+                // }
+            // }
+            
+            square.style.left = currentPosition.x + 'px';
+            square.style.top = currentPosition.y + 'px';
+            
+            requestAnimationFrame(updateSquarePosition);
+        }
+        
+        updateSquarePosition();
+
+        function draw() {
+  const canvas = document.getElementById("canvas");
+  if (canvas.getContext) {
+    const ctx = canvas.getContext("2d");
+
+    ctx.strokeRect(50, 50, 300,0);
+    ctx.strokeRect(50, 50, 300,40);
+    ctx.strokeRect(50, 90, 300,40);
+    ctx.strokeRect(50, 130, 300,40);
+    ctx.strokeRect(50, 170, 300,40);
+    for (let i = 0; i < 6; i++) {
+    for (let j = 0; j < 6; j++) {
+      ctx.strokeStyle = `rgb(0, ${Math.floor(255 - 42.5 * i)}, ${Math.floor(
+        255 - 42.5 * j,
+      )})`;
+      ctx.beginPath();
+    //   ctx.arc(50, 12.5 + 50, 10, 0, 2 * Math.PI, true);
+    //circle create at start index
+      ctx.arc(50, 2.5+50, 20, 0, 2 * Math.PI, true);
+      //circle create at end index 
+      ctx.arc(350, 2.5+50, 20, 0, 2 * Math.PI, true);
+    //circle create at start index
+      ctx.arc(50, 2.5+50, 20,  2 * Math.PI, true);
+      //circle create at end index 
+      ctx.arc(350, 2.5+50, 20,  2 * Math.PI, true);
+      ctx.stroke();
+    }
+  }
+  }
+}
+
+draw();
+
+    </script>
+</body>
+</html>
+
